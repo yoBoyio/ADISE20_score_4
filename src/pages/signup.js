@@ -11,6 +11,10 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+//Redux stuff
+import {connect} from 'react-redux';
+import {signupUser} from '../redux/actions/userActions';
+
 const styles = ({
     form: {
         textAlign: 'center'
@@ -48,10 +52,15 @@ const styles = ({
           password: '',
           confirmPassword:'',
           handle: '',
-          loading: false,
           errors: {}
         };
       }
+      componentWillReceiveProps(nextProps){
+        if(nextProps.UI.erros){
+            this.setState({ errors: nextProps.UI.errors });
+        }
+    };
+
      handleChange = (event) => {
         this.setState({
           [event.target.name]: event.target.value
@@ -70,25 +79,11 @@ const styles = ({
         handle: this.state.handle
     };
               
-        axios.post('/signup',newUserData)
-        .then(res => {
-            console.log(res.data);
-            localStorage.setItem(`FBidToken','Bearer ${res.data.token}`);
-            this.setState({
-                loading:false
-            });
-            this.props.history.push('/');
-        })
-        .catch(err => {
-            this.setState({
-                errors: err.response.data,
-                loading: false
-            })
-        })
+       this.props.logoutUser(newUserData, this.props.history); 
     }
     render() {
-        const {classes} = this.props;
-        const { errors, loading } = this.state;
+        const {classes, UI:{loading}} = this.props;
+        const { errors } = this.state;
 
         return (
            <Grid container className={classes.form}>
@@ -170,6 +165,14 @@ const styles = ({
 }
 
 signup.propTypes = {
-    classes: PropTypes.object.isRequired
-}
-export default withStyles(styles)(signup);
+    classes: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired,
+    signupUser: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => ({
+    user: state.user,
+    UI: state.UI
+});
+export default connect(mapStateToProps,{signupUser}) (withStyles(styles)(signup));
