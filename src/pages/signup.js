@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import withStyles from '@material-ui/core/styles/withStyles'
 import PropTypes from 'prop-types';
 import AppIcon from '../images/score4.png';
-import axios from 'axios';
 import {Link} from 'react-router-dom';
 //MUI 
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -79,7 +78,7 @@ const styles = ({
         handle: this.state.handle
     };
               
-       this.props.logoutUser(newUserData, this.props.history); 
+       this.props.signupUser(newUserData, this.props.history); 
     }
     render() {
         const {classes, UI:{loading}} = this.props;
