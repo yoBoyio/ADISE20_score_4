@@ -1,5 +1,7 @@
 import React from 'react'
 import {Route,Redirect} from 'react-router-dom';
+import {connect } from 'react-redux';
+import PropTypes from 'prop-types'
 //redirect to home 
 
 const AuthRoute = ({component: Component, authenticated, ...rest}) => (
@@ -10,4 +12,11 @@ const AuthRoute = ({component: Component, authenticated, ...rest}) => (
      />
 )
 
-export default AuthRoute;
+const mapStateToProps = (state) => ({
+    authenticated: state.user.authenticated
+})
+
+AuthRoute.Route = {
+    user: PropTypes.object.isRequired
+};
+export default connect(mapStateToProps) (AuthRoute);
