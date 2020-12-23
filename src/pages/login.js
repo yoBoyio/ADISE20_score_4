@@ -143,6 +143,6 @@ const mapsStateToProps = (state) => ({
 
 const mapActionsToProps = {
     loginUser
-}
+};
 
 export default connect(mapsStateToProps, mapActionsToProps)(withStyles(styles)(login));

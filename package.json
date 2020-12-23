@@ -20,6 +20,7 @@
     "redux-thunk": "^2.3.0",
     "web-vitals": "^0.2.4"
   },
+  "proxy": "http://localhost:4000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -42,7 +43,7 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ],
-    "proxy": "http://localhost:5000/score4-aa163/europe-west1/api"
+    ]
+    
   }
 }
