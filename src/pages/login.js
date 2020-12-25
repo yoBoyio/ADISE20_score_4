@@ -49,7 +49,7 @@ const styles = ({
           errors: {}
         };
       }
-      componentWillReceiveProps(nextProps){
+      UNSAFE_componentWillReceiveProps(nextProps){
         if(nextProps.UI.erros){
             this.setState({ errors: nextProps.UI.errors });
         }
