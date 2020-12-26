@@ -1,18 +1,22 @@
 import {SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER } from '../type';
 import axios from 'axios';
+import {api} from '../../axiosConfigs';;
 
+  
 export const loginUser = (userData, history) => (dispatch) =>{
     dispatch({type: LOADING_UI });
-
-    axios
+    
+      api
         .post('/login',userData)
-        .then((res) => {
+        .then(res => {
+            console.log(res)
             setAuthorizationHeader(res.data.token);
             dispatch(getUserData());
             dispatch({ type: CLEAR_ERRORS});
             history.push('/');
         })
         .catch((err) => {
+            console.log(err);
             dispatch({
                 type:SET_ERRORS,
                 payload: err.response.data
@@ -23,7 +27,7 @@ export const loginUser = (userData, history) => (dispatch) =>{
 export const signupUser = (newUserData, history) => (dispatch) =>{
     dispatch({type: LOADING_UI });
 
-    axios
+    api
         .post('/signup',newUserData)
         .then(res => {    
             setAuthorizationHeader(res.data.token);
@@ -37,30 +41,30 @@ export const signupUser = (newUserData, history) => (dispatch) =>{
                 payload: err.response.data
             })
         });
-}
+};
 
 export const logoutUser = () => (dispatch) => {
     localStorage.removeItem('FBIdToken');
-    delete axios.default.headers.common['Authorization'];
+    delete api.default.headers.common['Authorization'];
     dispatch({type: SET_UNAUTHENTICATED});
-}
+};
 
 export const getUserData = () => (dispatch) => {
     dispatch({type: LOADING_USER});
-    axios.get('/user')
-        .then(res => {
+    api.get('/user')
+        .then((res) => {
             dispatch({
                 type: SET_USER,
                 payload: res.data
             })
         })
-        .catch(err => console.log(err));
-}
+        .catch( (err) => console.log(err));
+};
 
 
 
 const setAuthorizationHeader = (token)=>{
     const FBIdToken = `Bearer ${token}`;
             localStorage.setItem('FBidToken',FBIdToken );
-            axios.default.headers.common['Authoriazation'] = FBIdToken;
-}
+            api.defaults.headers.common['Authoriazation'] = FBIdToken;
+};

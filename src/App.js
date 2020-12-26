@@ -20,8 +20,7 @@ import signup from './pages/signup';
 //components
 import Navbar from './components/Navbar';
 import AuthRoute from './util/AuthRoute';
-import axios from 'axios';
-
+import {api} from './axiosConfigs'
 const theme = createMuiTheme(themeFile);
 
 //check if token is auth and not expired
@@ -33,12 +32,13 @@ if(token){
     window.location.href='/login';
   }else{
     store.dispatch({type: SET_AUTHENTICATED});
-    axios.defaults.headers.common['Authorization'] = token;
+    api.defaults.headers.common['Authorization'] = token;
     store.dispatch(getUserData());
   }
 }
 
 function App() {
+
   return (
 
       <MuiThemeProvider theme={theme}>
