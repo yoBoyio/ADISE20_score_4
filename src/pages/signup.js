@@ -55,7 +55,7 @@ const styles = ({
         };
       }
       componentWillReceiveProps(nextProps){
-        if(nextProps.UI.erros){
+        if(nextProps.UI.errors){
             this.setState({ errors: nextProps.UI.errors });
         }
     };

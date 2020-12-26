@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 //redux 
 import {connect} from 'react-redux';
-import logoutUser from '../redux/actions/userActions';
+import {logoutUser} from '../redux/actions/userActions';
 //mui
 import Button from '@material-ui/core/Button';
 import  Paper from '@material-ui/core/Paper';
@@ -136,16 +136,18 @@ class Profile extends Component {
                 </Typography>
             </Paper>
         ) ) : (<p>loading...</p>)
+
         return profileMarkup;
     }
 }
 const mapStateToProps = (state) => ({
     user: state.user
 });
+const mapActionsToProps = { logoutUser };
 
 Profile.propTypes = {
     logoutUser: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired
 }
-export default connect(mapStateToProps)(withStyles(styles)(Profile))
+export default connect(mapStateToProps,mapActionsToProps)(withStyles(styles)(Profile))
