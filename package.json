@@ -24,7 +24,6 @@
     "source-map-explorer": "^2.5.1",
     "web-vitals": "^0.2.4"
   },
-  "proxy": "http://localhost:8000",
   "scripts": {
    "analyze": "source-map-explorer build/static/js/main.*",
     "start": "react-scripts start",

@@ -49,8 +49,8 @@ const styles = ({
           errors: {}
         };
       }
-      UNSAFE_componentWillReceiveProps(nextProps){
-        if(nextProps.UI.erros){
+      componentWillReceiveProps(nextProps){
+        if(nextProps.UI.errors){
             this.setState({ errors: nextProps.UI.errors });
         }
     }
@@ -60,6 +60,7 @@ const styles = ({
         });
       };
       handleSubmit = (event) => {
+
         event.preventDefault();
 
         const userData = {
@@ -68,6 +69,7 @@ const styles = ({
         this.props.loginUser(userData, this.props.history);    
       
     };
+
     render() {
         const {classes, UI: { loading } } = this.props;
         const { errors } = this.state;
