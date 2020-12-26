@@ -1,11 +1,10 @@
-import { Route, Switch } from 'react-router-dom';
 
 import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid';
+import {api} from '../axiosConfigs';
 //components
 import Profile from '../components/Profile'
 import Score4 from '../components/Score4/Score4';
-import {api} from '../axiosConfigs';
 
 //home page get data from api using axios
  class home extends Component {
@@ -13,9 +12,9 @@ import {api} from '../axiosConfigs';
         tests:null
     }
     componentDidMount(){
-        api.get('/test')
+        api.get('/tests')
         .then((res) =>{
-            console.log(res);
+            console.log(res.data);
             this.setState({
                 tests: res.data
             })
@@ -24,8 +23,8 @@ import {api} from '../axiosConfigs';
     }
     render() {
         let recentTestMarkup = this.state.tests ? (
-            this.state.tests.map(test => <p>{test.field}</p>)
-        ): <p> Loading...</p>
+            this.state.tests.map(test= <p>{test.field}</p>)
+        ): (<p> Loading...</p>)
         return (
             <Grid container spacing={16}>
                 <Grid item sm={8} xs={12}>

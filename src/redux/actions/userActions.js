@@ -1,5 +1,4 @@
 import {SET_USER, SET_ERRORS, CLEAR_ERRORS, LOADING_UI, SET_UNAUTHENTICATED, LOADING_USER } from '../type';
-import axios from 'axios';
 import {api} from '../../axiosConfigs';;
 
   
@@ -9,14 +8,12 @@ export const loginUser = (userData, history) => (dispatch) =>{
       api
         .post('/login',userData)
         .then(res => {
-            console.log(res)
             setAuthorizationHeader(res.data.token);
             dispatch(getUserData());
             dispatch({ type: CLEAR_ERRORS});
             history.push('/');
         })
         .catch((err) => {
-            console.log(err);
             dispatch({
                 type:SET_ERRORS,
                 payload: err.response.data
@@ -36,6 +33,7 @@ export const signupUser = (newUserData, history) => (dispatch) =>{
             history.push('/');
         })
         .catch(err => {
+            
             dispatch({
                 type:SET_ERRORS,
                 payload: err.response.data
@@ -45,7 +43,7 @@ export const signupUser = (newUserData, history) => (dispatch) =>{
 
 export const logoutUser = () => (dispatch) => {
     localStorage.removeItem('FBIdToken');
-    delete api.default.headers.common['Authorization'];
+    delete api.defaults.headers.common['Authorization'];
     dispatch({type: SET_UNAUTHENTICATED});
 };
 
