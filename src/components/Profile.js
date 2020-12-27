@@ -1,8 +1,10 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
+import MyButton from '../util/MyButton';
+
 //redux 
 import {connect} from 'react-redux';
 import {logoutUser} from '../redux/actions/userActions';
@@ -13,10 +15,7 @@ import MuiLink from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 
 //icons
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import LinkIcon from '@material-ui/icons/Link';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import { IconButton, Tooltip } from '@material-ui/core';
 import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
 
 const styles = (theme) =>({
@@ -74,7 +73,7 @@ class Profile extends Component {
     }
     render() {
         //todo add credentials
-        const {classes, user:{credentials: {handle,bio, website, location},
+        const {classes, user:{credentials: {handle,createdAt  },
          loading,
          authenticated
             }
@@ -91,34 +90,18 @@ class Profile extends Component {
                     <hr/>
                     <div className="profile-details">
                         <MuiLink component={Link} to={`/users/${handle}`} color='primary' variant="h5">
-                            @{handle}
+                            {handle}
                         </MuiLink>
                         <hr/>
-                        {bio && <Typography variant="body2"> {bio}</Typography>}
-                        <hr/>
-                        {location && (
-                            <Fragment>
-                                <LocationOnIcon color="primary"/> 
-                                <span>{location}</span>
-                                <hr/>
-                            </Fragment>
-                        )}
-                        {website && (
-                            <Fragment>
-                                <LinkIcon color="primary"/>
-                                <a href={website} target="_blank" rel="noopener noreferrer">
-                                    {' '}{website}
-                                </a>
-                                <hr/>
-                            </Fragment>
-                        )}
+                    
+                       
                         <CalendarTodayIcon color="primary"/>{' '}
+                        <span> Joined {dayjs(createdAt).format('MM/YYYY')}</span>
                     </div>
-                    <Tooltip title="Logout" placement="onTop">
-                        <IconButton onClick={this.handleLogout}>
-                            <KeyboardReturnIcon color="primary"/>
-                        </IconButton>
-                    </Tooltip>
+                    <MyButton tip="Logout" onClick={this.handleLogout}>
+                        <KeyboardReturnIcon color="primary"/>
+                    </MyButton>
+                   
                 </div>
             </Paper>
         ) : (
