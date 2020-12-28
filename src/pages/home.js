@@ -5,7 +5,7 @@ import {api} from '../axiosConfigs';
 //components
 import Profile from '../components/Profile'
 import Score4 from '../components/Score4/Score4';
-
+import BoardSkeleton from '../util/BoardSkeleton';
 //home page get data from api using axios
  class home extends Component {
     state={
@@ -24,7 +24,7 @@ import Score4 from '../components/Score4/Score4';
     render() {
         let recentTestMarkup = this.state.tests ? (
             this.state.tests.map(test= <p>{test.field}</p>)
-        ): (<p> Loading...</p>)
+        ): (<BoardSkeleton/>)
         return (
             <Grid container spacing={16}>
                 <Grid item sm={8} xs={12}>

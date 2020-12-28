@@ -1,6 +1,6 @@
 //Theme  
 
-export default
+export default 
 {
     palette: {
       primary: {
