@@ -4,7 +4,6 @@ import {api} from '../../axiosConfigs';;
   
 export const loginUser = (userData, history) => (dispatch) =>{
     dispatch({type: LOADING_UI });
-    
       api
         .post('/login',userData)
         .then(res => {
@@ -62,7 +61,7 @@ export const getUserData = () => (dispatch) => {
 
 
 const setAuthorizationHeader = (token)=>{
-    const FBIdToken = `Bearer ${token}`;
+            const FBIdToken = `Bearer ${token}`;
             localStorage.setItem('FBidToken',FBIdToken );
-            api.defaults.headers.common['Authoriazation'] = FBIdToken;
+            api.defaults.headers.common['Authorization'] = FBIdToken;
 };

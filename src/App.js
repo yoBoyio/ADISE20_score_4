@@ -24,7 +24,8 @@ import {api} from './axiosConfigs'
 const theme = createMuiTheme(themeFile);
 
 //check if token is auth and not expired
-const token = localStorage.FBIdToken;
+
+const token = localStorage.FBidToken;
 if(token){
   const decodedToken = jwtDecode(token);
   if(decodedToken.exp*1000 < Date.now()){

@@ -1,4 +1,4 @@
-import {SET_TEST,LOADING_DATA,SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED,LOADING_USER } from '../type';
+import {LOADING_DATA,SET_USER, SET_AUTHENTICATED, SET_UNAUTHENTICATED,LOADING_USER } from '../type';
 
 const initialState = {
     authenticated: false,
