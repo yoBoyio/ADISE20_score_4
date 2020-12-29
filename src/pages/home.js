@@ -26,8 +26,9 @@ import BoardSkeleton from '../util/BoardSkeleton';
             this.state.tests.map(test= <p>{test.field}</p>)
         ): (<BoardSkeleton/>)
         return (
-            <Grid container spacing={16}>
+            <Grid container spacing={10}>
                 <Grid item sm={8} xs={12}>
+                    <Score4/>
                     {recentTestMarkup}
                 </Grid>
                 <Grid item sm={4} xs={12}>
