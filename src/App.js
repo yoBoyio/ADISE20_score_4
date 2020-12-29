@@ -21,6 +21,8 @@ import signup from './pages/signup';
 import Navbar from './components/Navbar';
 import AuthRoute from './util/AuthRoute';
 import {api} from './axiosConfigs'
+import Score4 from './components/Score4/Score4';
+
 const theme = createMuiTheme(themeFile);
 
 //check if token is auth and not expired
@@ -53,6 +55,7 @@ function App() {
                 />
               <AuthRoute exact path="/signup" component={signup}
                 />
+                <Route exact path="/score4" component={Score4} />
             </Switch>
           </div>
           </Router>

@@ -25,7 +25,7 @@ class Score4Dopper extends Component {
 
   render() {
     const { x, y } = { ...this.state };
-
+    
     return (
       <div className="dropper" onMouseMove={this.movePiece} onClick={this.dropPiece}>
         { this.props.turn

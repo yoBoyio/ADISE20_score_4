@@ -12,33 +12,51 @@ class Score4 extends Component {
     // this.colyseus = new Colyseus.Client('ws://localhost:4000');
     // this.room = this.colyseus.joinOrCreate( 'score4');
     // this.room.onStateChange.add(this.onStateChange);
-    // this.room.onMessage.add(this.onMessage);
+      
+      this.state = {
+        board: [],
+        win: null,
+        draw: false,
+        numSpectate: 0,
+        room:null
+      };
+  }
+  componentDidUpdate(){
+    this.state.room.onStateChange((state)=>{
+      console.log("Room State",state);
+      this.setState(state);
+
+    })
+    
+  }
+  componentDidMount(){
+    const spectate = this.props.match.params.id;
     const client = new Colyseus.Client('ws://localhost:4000');
-    this.room=client.joinOrCreate("score4").then(room => {
-            console.log(room.sessionId, "joined", room.name);
+    
+    client.joinOrCreate(spectate || 'score4', { spectate: spectate || null }).then(room => {
+        this.setState({room:room})
+        console.log("Client",room.sessionId, "joined", room.name);
+        console.log("Room id:",room.id)
+        this.state.room.onMessage((data) => {
+          this.setState(data);
+          if (data.hasJoined ){
+            console.log("message play");
+    
+          }
+          console.log("message received from server");
+          console.log(data);
+          });
+        
         }).catch(e => {
-            console.log("JOIN ERROR", e);
-     });
-      this.room.onStateChange.add((state)=>{this.onStateChange=state});
-      this.room.onMessage.add(this.onMessage);
-    this.state = {
-      board: [],
-      win: null,
-      draw: false,
-      numSpectate: 0,
-    };
-  }
+          console.log("JOIN ERROR", e);
+    });
 
-  onStateChange = (newState) => {
-    this.setState(newState);
-  }
-
-  onMessage = (msg) => {
-    this.setState(msg);
   }
 
   render() {
-    if (!this.room) {
+    console.log("rend",this.state.room)
+
+    if (!this.state.room) {
       return null;
     }
     const {
@@ -52,7 +70,7 @@ class Score4 extends Component {
     const data = {
       spectator: !symbol,
       spectators: numSpectate,
-      room: this.room.id,
+      room: this.state.room.id,
       active,
       colors,
       isTurn,
@@ -61,15 +79,15 @@ class Score4 extends Component {
       ended,
       start,
     };
-
+    console.log("data ",data)
     return (
-      <div className="Score4">
+      <div className="score4">
         <InfoPanel data={data} />
         <ReactCursorPosition>
           <Score4Dropper
             turn={isTurn && active}
             pieceColor={color}
-            action={this.room.send.bind(this.room)}
+            action={this.state.room.send.bind(this.state.room)}
           />
         </ReactCursorPosition>
         <Score4Board colors={colors} board={this.state.board} />
