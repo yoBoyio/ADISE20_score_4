@@ -4,16 +4,23 @@ import * as Colyseus from 'colyseus.js';
 import Score4Board from './Board';
 import Score4Dropper from './Dropper';
 import InfoPanel from './InfoPanel';
-import { settings } from '../../settings';
+import { gameSettings } from '../../util/gameSettings';
 
 class Score4 extends Component {
   constructor(props) {
     super(props);
-    this.colyseus = new Colyseus.Client('ws://localhost:8000');
-    const spectate = this.props.match.params.id;
-    this.room = this.colyseus.join(spectate || 'Score4', { spectate: spectate || null });
-    this.room.onStateChange.add(this.onStateChange);
-    this.room.onMessage.add(this.onMessage);
+    // this.colyseus = new Colyseus.Client('ws://localhost:4000');
+    // this.room = this.colyseus.joinOrCreate( 'score4');
+    // this.room.onStateChange.add(this.onStateChange);
+    // this.room.onMessage.add(this.onMessage);
+    const client = new Colyseus.Client('ws://localhost:4000');
+    this.room=client.joinOrCreate("score4").then(room => {
+            console.log(room.sessionId, "joined", room.name);
+        }).catch(e => {
+            console.log("JOIN ERROR", e);
+     });
+      this.room.onStateChange.add((state)=>{this.onStateChange=state});
+      this.room.onMessage.add(this.onMessage);
     this.state = {
       board: [],
       win: null,
@@ -38,7 +45,7 @@ class Score4 extends Component {
       symbol, numSpectate, draw, win, ended, start, turn,
     } = this.state;
 
-    const { colors } = settings;
+    const { colors } = gameSettings;
     const { color } = colors[symbol || 0];
     const active = !draw && !win;
     const isTurn = symbol === turn;
