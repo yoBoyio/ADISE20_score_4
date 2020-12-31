@@ -56,6 +56,7 @@ function App() {
               <AuthRoute exact path="/signup" component={signup}
                 />
                 <Route exact path="/score4" component={Score4} />
+                <Route exact path="/spectate/:id/" component={Score4} />
             </Switch>
           </div>
           </Router>

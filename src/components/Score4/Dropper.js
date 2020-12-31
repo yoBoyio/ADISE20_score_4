@@ -20,7 +20,7 @@ class Score4Dopper extends Component {
 
   dropPiece = () => {
     const col = this.state.x / 50;
-    this.props.action({ command: 'play', col });
+    this.props.action( "play",{ command: 'play', col });
   }
 
   render() {

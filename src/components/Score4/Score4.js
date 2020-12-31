@@ -9,43 +9,82 @@ import { gameSettings } from '../../util/gameSettings';
 class Score4 extends Component {
   constructor(props) {
     super(props);
-    // this.colyseus = new Colyseus.Client('ws://localhost:4000');
-    // this.room = this.colyseus.joinOrCreate( 'score4');
-    // this.room.onStateChange.add(this.onStateChange);
       
       this.state = {
         board: [],
         win: null,
         draw: false,
+        ended:false,
         numSpectate: 0,
-        room:null
+        room:null,
+        start:null,
+        symbol:null,
+        hasjoin:null,
       };
   }
   componentDidUpdate(){
+   
     this.state.room.onStateChange((state)=>{
       console.log("Room State",state);
       this.setState(state);
 
     })
-    
+    if (!this.state.start ){
+    this.state.room.onMessage("start",(data) => {
+      this.setState(data);
+      });
+    }
+    if (!this.state.win ){
+      this.state.room.onMessage("win",(data) => {
+        this.setState(data);
+        });
+      }
+
+      if (!this.state.draw ){
+        this.state.room.onMessage("draw",(data) => {
+          this.setState(data);
+          });
+        }
+        if (!this.state.ended ){
+          this.state.room.onMessage("ended",(data) => {
+            this.setState(data);
+            console.log("ended",data);
+
+            });
+          }
   }
+
+  updateMessage(message) {
+    let { messages } = this.state;
+    messages.push(message)
+    this.setState({ messages })
+    
+
+  }
+
   componentDidMount(){
     const spectate = this.props.match.params.id;
     const client = new Colyseus.Client('ws://localhost:4000');
-    
+    if(spectate!=null){
+      client.joinById(spectate).then(room=>{
+        this.setState(room)
+
+      })
+    }
     client.joinOrCreate(spectate || 'score4', { spectate: spectate || null }).then(room => {
         this.setState({room:room})
         console.log("Client",room.sessionId, "joined", room.name);
         console.log("Room id:",room.id)
-        this.state.room.onMessage((data) => {
-          this.setState(data);
-          if (data.hasJoined ){
-            console.log("message play");
-    
-          }
-          console.log("message received from server");
-          console.log(data);
-          });
+        
+    this.state.room.onMessage("join",(data) => {
+      this.setState(data);
+      if (data.hasJoined ){
+        console.log("message *");
+      }
+      console.log("message join");
+      console.log(data);
+      });
+
         
         }).catch(e => {
           console.log("JOIN ERROR", e);
@@ -54,7 +93,7 @@ class Score4 extends Component {
   }
 
   render() {
-    console.log("rend",this.state.room)
+    console.log("rend",this.state)
 
     if (!this.state.room) {
       return null;
@@ -80,6 +119,7 @@ class Score4 extends Component {
       start,
     };
     console.log("data ",data)
+    console.log(this.state.room)
     return (
       <div className="score4">
         <InfoPanel data={data} />
