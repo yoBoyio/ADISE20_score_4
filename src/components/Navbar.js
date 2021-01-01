@@ -19,9 +19,11 @@ import AddIcon from '@material-ui/icons/Add';
                 <Toolbar className="nav-container">
                    {authenticated ? (
                     <Fragment>
-                        <MyButton tip="Create test">
-                            <AddIcon/>
-                        </MyButton>
+                        <Link to="/score4">
+                            <MyButton tip="Create Room">
+                                <AddIcon/>
+                            </MyButton>
+                        </Link>   
                        <Link to="/">
                        <MyButton tip="Home">
                             <HomeIcon/>

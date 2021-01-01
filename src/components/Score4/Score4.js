@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import ReactCursorPosition from 'react-cursor-position';
 import * as Colyseus from 'colyseus.js';
+import Grid from '@material-ui/core/Grid';
+import './styles/score4.css';
+
+//components
 import Score4Board from './Board';
 import Score4Dropper from './Dropper';
 import InfoPanel from './InfoPanel';
 import { gameSettings } from '../../util/gameSettings';
+import SelectButton from './SelectButton'
 
 class Score4 extends Component {
   constructor(props) {
@@ -20,6 +25,7 @@ class Score4 extends Component {
         start:null,
         symbol:null,
         hasjoin:null,
+        score:null
       };
   }
   componentDidUpdate(){
@@ -54,38 +60,23 @@ class Score4 extends Component {
           }
   }
 
-  updateMessage(message) {
-    let { messages } = this.state;
-    messages.push(message)
-    this.setState({ messages })
-    
-
-  }
 
   componentDidMount(){
-    const spectate = this.props.match.params.id;
+    // const spectate = this.props.match.params.id;
+    // console.log(spectate)
     const client = new Colyseus.Client('ws://localhost:4000');
-    if(spectate!=null){
-      client.joinById(spectate).then(room=>{
-        this.setState(room)
-
-      })
-    }
-    client.joinOrCreate(spectate || 'score4', { spectate: spectate || null }).then(room => {
+   
+    client.joinOrCreate( 'score4').then(room => {
         this.setState({room:room})
         console.log("Client",room.sessionId, "joined", room.name);
         console.log("Room id:",room.id)
         
     this.state.room.onMessage("join",(data) => {
       this.setState(data);
-      if (data.hasJoined ){
-        console.log("message *");
-      }
+     
       console.log("message join");
       console.log(data);
-      });
-
-        
+      })
         }).catch(e => {
           console.log("JOIN ERROR", e);
     });
@@ -99,9 +90,9 @@ class Score4 extends Component {
       return null;
     }
     const {
-      symbol, numSpectate, draw, win, ended, start, turn,
+      symbol, numSpectate, draw, win, ended, start, turn,score
     } = this.state;
-
+    
     const { colors } = gameSettings;
     const { color } = colors[symbol || 0];
     const active = !draw && !win;
@@ -117,11 +108,14 @@ class Score4 extends Component {
       win,
       ended,
       start,
+      score
     };
     console.log("data ",data)
     console.log(this.state.room)
     return (
       <div className="score4">
+      
+        <Grid item sm={8} xs={12}>  
         <InfoPanel data={data} />
         <ReactCursorPosition>
           <Score4Dropper
@@ -131,6 +125,8 @@ class Score4 extends Component {
           />
         </ReactCursorPosition>
         <Score4Board colors={colors} board={this.state.board} />
+        <SelectButton data={data} />
+        </Grid>
       </div>
     );
   }

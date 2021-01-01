@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import boardSkeleton from '../images/boardSkeleton.jpg';
+import boardSkeleton from '../images/boardSkeleton.jpg'
 import PropTypes from 'prop-types';
 //MUI
 import Card from '@material-ui/core/Card';

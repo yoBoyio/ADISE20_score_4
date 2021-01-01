@@ -41,7 +41,7 @@ export const signupUser = (newUserData, history) => (dispatch) =>{
 };
 
 export const logoutUser = () => (dispatch) => {
-    localStorage.removeItem('FBIdToken');
+    localStorage.removeItem('FBidToken');
     delete api.defaults.headers.common['Authorization'];
     dispatch({type: SET_UNAUTHENTICATED});
 };
