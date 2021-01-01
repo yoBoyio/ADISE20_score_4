@@ -1,0 +1,17 @@
+.select-buttons{
+    
+        width: 400px;
+        height: 100px;
+        font-weight: bold;
+        color: #ffffff;
+        padding: 20px;
+        display: flex;
+        margin-top: 100px;
+        align-self: center;
+}
+
+  
+.btn-pos{
+    
+    left: 50%;
+}
