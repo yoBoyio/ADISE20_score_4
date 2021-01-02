@@ -6,6 +6,8 @@
   }
   
   .board {
+    margin-left: 35px;
+    margin-top: 10px;
     width: 350px;
     height: 300px;
   }

@@ -12,10 +12,11 @@ const Score4Board = (props) => {
           cells.push(cell);
         }
       }
+      const exists = cells ? (cells) : (<p>Waiting player to join...</p>)
       return (
         <div className="board">
           <div className="grid">
-            {cells}
+            {exists}
           </div>
         </div>
       );
