@@ -73,35 +73,30 @@ class Profile extends Component {
     }
     render() {
         //todo add credentials
-        const {classes, user:{credentials: {handle,createdAt  },
-         loading,
-         authenticated
+        const {classes,
+             user:{
+                credentials: {handle,createdAt},
+                loading,
+                authenticated
             }
         } = this.props;
 
-        let profileMarkup = !loading ? (authenticated ? (
+        let profileMarkup = !loading ? (
+            authenticated ? (
             <Paper className={classes.paper}>
                 <div className={classes.profile}>
-                    <div className="image-wrapper">
-                    {/*
-                     <img src={imageUrl} alt='profile' className="profile-image"/>
-                    */}
-                    </div>
                     <hr/>
                     <div className="profile-details">
                         <MuiLink  color='primary' variant="h5">
                             {handle}
                         </MuiLink>
                         <hr/>
-                    
-                       
                         <CalendarTodayIcon color="primary"/>{' '}
                         <span> Joined {dayjs(createdAt).format('MM/YYYY')}</span>
                     </div>
                     <MyButton tip="Logout" onClick={this.handleLogout}>
                         <KeyboardReturnIcon color="primary"/>
                     </MyButton>
-                   
                 </div>
             </Paper>
         ) : (
@@ -118,7 +113,8 @@ class Profile extends Component {
                     </div>
                 </Typography>
             </Paper>
-        ) ) : (<p>loading...</p>)
+           )
+        ) :(<p>loading...</p>);
 
         return profileMarkup;
     }
@@ -133,4 +129,4 @@ Profile.propTypes = {
     user: PropTypes.object.isRequired,
     classes: PropTypes.object.isRequired
 }
-export default connect(mapStateToProps,mapActionsToProps)(withStyles(styles)(Profile))
+export default connect(mapStateToProps,mapActionsToProps)(withStyles(styles)(Profile));

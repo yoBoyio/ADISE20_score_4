@@ -17,12 +17,12 @@ import {logoutUser,getUserData} from './redux/actions/userActions';
 import home from './pages/home';
 import login from './pages/login';
 import signup from './pages/signup';
+import CreateRoom from './pages/CreateRoom';
 //components
 import Navbar from './components/Navbar';
 import AuthRoute from './util/AuthRoute';
 import {api} from './axiosConfigs'
 import Score4 from './components/Score4/Score4';
-
 const theme = createMuiTheme(themeFile);
 
 //check if token is auth and not expired
@@ -55,7 +55,7 @@ function App() {
                 />
               <AuthRoute exact path="/signup" component={signup}
                 />
-                <Route exact path="/spectate/:id/" component={Score4} />
+                <Route exact path="/score4" component={CreateRoom}/>
             </Switch>
           </div>
           </Router>
