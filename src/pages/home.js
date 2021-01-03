@@ -1,41 +1,33 @@
 //redux 
 import {connect} from 'react-redux';
-import {logoutUser} from '../redux/actions/userActions';
-
 import PropTypes from 'prop-types';
 
 import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid';
 //components
-import Profile from '../components/Profile'
-import Score4 from '../components/Score4/Score4';
+import Profile from '../components/Profile';
 import BoardSkeleton from '../util/BoardSkeleton';
+import {getHistory} from '../redux/actions/dataActions';
+import History from '../components/History';
 //home page get data from api using axios
  class home extends Component {
       
-    handleLogout = () => {
-        this.props.logoutUser();
-    }
-    
    
-    
-
-   
-
+    componentDidMount() {
+        this.props.getHistory();
+      }
     render() {
-        const { user:{
-         loading,
-         authenticated
-            }
-        } = this.props;
+        const { history, loading } = this.props.data;
+        const { authenticated  } = this.props.user;
 
-        let isAuth = !loading ? (authenticated ?(
-           <Score4/>
-        ): (<BoardSkeleton/>)) : (<p>loading...</p>)
+        let recentHistory = !loading ? (authenticated ?
+            ( history.map((game) => <History game={game} key={game.room_id} />)
+        ) : (<BoardSkeleton />)) : (<p>loading...</p>)
+        
         return (
             <Grid container spacing={10}>
                 <Grid item sm={8} xs={12}>
-                    {isAuth}
+                    {recentHistory}
                 </Grid>
                 <Grid item sm={4} xs={12}>
                     <Profile/>
@@ -45,10 +37,17 @@ import BoardSkeleton from '../util/BoardSkeleton';
     }
 }
 const mapStateToProps = (state) => ({
+    data: state.data,
     user: state.user
-});
-Profile.propTypes = {
-    logoutUser: PropTypes.func.isRequired,
+  });
+
+home.propTypes = {
+    history: PropTypes.func.isRequired,
+    data: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
-}
-export default connect(mapStateToProps)(home);
+
+  };
+export default connect(
+    mapStateToProps,
+    { getHistory }
+  )(home);
