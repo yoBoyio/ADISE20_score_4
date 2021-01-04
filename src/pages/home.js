@@ -4,27 +4,47 @@ import PropTypes from 'prop-types';
 
 import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+
 //components
 import Profile from '../components/Profile';
 import BoardSkeleton from '../util/BoardSkeleton';
 import {getHistory} from '../redux/actions/dataActions';
 import History from '../components/History';
 //home page get data from api using axios
+const styles = {
+    card: {
+      position: 'relative',
+      display: 'flex',
+      marginBottom: 20
+    },
+    image: {
+      minWidth: 200
+    },
+    content: {
+      padding: 25,
+      objectFit: 'cover',
+      marginLeft: "30%"
+    }
+  };
+  
  class home extends Component {
       
-//    state={
-//        exist:false
-//    }
+   
     componentDidMount() {
-       // if(!this.state.exist){
-            this.props.getHistory(this.props.user.credentials.handle);
-        //}
-      }
-      
 
+            this.setState(this.props.getHistory(this.props.user.credentials.handle));
+      }
+   
     render() {
+        console.log(this.state)
+
         const { history, loading } = this.props.data;
         const { authenticated  } = this.props.user;
+        const {classes} = this.props;
 
         let recentHistory = !loading ? (authenticated ?
             ( history.map((game) => <History game={game} key={game.room_id} />)
@@ -33,6 +53,12 @@ import History from '../components/History';
         return (
             <Grid container spacing={10}>
                 <Grid item sm={8} xs={12}>
+               { authenticated && 
+                <Card  className={classes.card}>    
+                    <CardContent  className={classes.content}>
+                    <Typography variant="h2">History</Typography>  
+                    </CardContent>
+                </Card> }
                     {recentHistory}
                 </Grid>
                 <Grid item sm={4} xs={12}>
@@ -45,7 +71,9 @@ import History from '../components/History';
 const mapStateToProps = (state) => ({
     data: state.data,
     user: state.user,
-    history: state.data.history
+    history: state.data.history,
+    classes: PropTypes.object.isRequired,
+
   });
 
 const mapActionsToProps = {
@@ -62,4 +90,4 @@ home.propTypes = {
 export default connect(
     mapStateToProps,
     mapActionsToProps
-  )(home);
+  )(withStyles(styles)(home));

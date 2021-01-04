@@ -1,6 +1,5 @@
 import {api} from '../../axiosConfigs';
 import {
-    LOADING_DATA,
     SET_HISTORY,
     LOADING_UI,
     STOP_LOADING_UI,
