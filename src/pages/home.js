@@ -12,10 +12,16 @@ import History from '../components/History';
 //home page get data from api using axios
  class home extends Component {
       
-   
+//    state={
+//        exist:false
+//    }
     componentDidMount() {
-        this.props.getHistory();
+       // if(!this.state.exist){
+            this.props.getHistory(this.props.user.credentials.handle);
+        //}
       }
+      
+
     render() {
         const { history, loading } = this.props.data;
         const { authenticated  } = this.props.user;
@@ -38,16 +44,22 @@ import History from '../components/History';
 }
 const mapStateToProps = (state) => ({
     data: state.data,
-    user: state.user
+    user: state.user,
+    history: state.data.history
   });
 
+const mapActionsToProps = {
+    getHistory
+}
+
 home.propTypes = {
-    history: PropTypes.func.isRequired,
+    getHistory:PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
-
+    history: PropTypes.object.isRequired
   };
+
 export default connect(
     mapStateToProps,
-    { getHistory }
+    mapActionsToProps
   )(home);
