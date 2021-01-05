@@ -40,3 +40,9 @@ $ npm start
 |`handlePlay`| Handles the players' turn, ckecks win or draw|
 |`onLeave`| Triggers when a player leaves the room|
 |`onDispose`| Triggers when the game is ended|
+
+
+## Contributors
+
+Samsouri Nasia: Backend Developer
+Tolios Dimitris: Frontend Developer 
