@@ -25,7 +25,7 @@ import AddIcon from '@material-ui/icons/Add';
                             </MyButton>
                         </Link>   
                        <Link to="/">
-                       <MyButton tip="Home">
+                       <MyButton tip="History">
                             <HomeIcon/>
                         </MyButton>
                        </Link>

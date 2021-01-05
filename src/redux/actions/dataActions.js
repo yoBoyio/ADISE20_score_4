@@ -1,16 +1,15 @@
 import {api} from '../../axiosConfigs';
 import {
-    LOADING_DATA,
     SET_HISTORY,
     LOADING_UI,
     STOP_LOADING_UI,
     CLEAR_ERRORS
   } from '../type';
 
-export const getHistory = () => (dispatch) => {
+export const getHistory = (handle) => (dispatch) => {
     dispatch({ type: LOADING_UI   });
     api
-      .get('/history')
+      .get(`/history/${handle}`)
       .then((res) => {
         dispatch({
           type: SET_HISTORY,

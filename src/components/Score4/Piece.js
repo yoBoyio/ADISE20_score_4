@@ -9,7 +9,7 @@ const Score4Piece = (props) => {
     height: '50px',
     width: '50px',
     position: 'absolute',
-    left: x+35,
+    left: x,
   };
   return (
     <div style={style} />

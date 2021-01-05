@@ -1,7 +1,6 @@
 import {
     LOADING_DATA,
     SET_HISTORY,
-    SET_GAME
   } from '../type';
 
 const initialState = {
@@ -22,7 +21,6 @@ const initialState = {
           history: action.payload,
           loading: false
         }; 
-        
       default:
         return state;
   }

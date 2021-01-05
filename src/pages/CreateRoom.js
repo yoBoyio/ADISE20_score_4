@@ -16,13 +16,14 @@ import BoardSkeleton from '../util/BoardSkeleton';
 
     render() {
         const { user:{
+         credentials: {handle},
          loading,
          authenticated
             }
         } = this.props;
 
         let isAuth = !loading ? (authenticated ?(
-           <Score4/>
+           <Score4 user={handle}/>
         ): (<BoardSkeleton/>)) : (<p>loading...</p>)
         return (
             <Grid container spacing={10}>
@@ -40,7 +41,6 @@ const mapStateToProps = (state) => ({
     user: state.user
 });
 CreateRoom.propTypes = {
-    logoutUser: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
 }
 export default connect(mapStateToProps)(CreateRoom);

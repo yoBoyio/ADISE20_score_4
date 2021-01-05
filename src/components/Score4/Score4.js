@@ -4,102 +4,91 @@ import * as Colyseus from 'colyseus.js';
 import Grid from '@material-ui/core/Grid';
 import './styles/score4.css';
 
+import { Link } from 'react-router-dom';
+
+
 //components
 import Score4Board from './Board';
 import Score4Dropper from './Dropper';
 import InfoPanel from './InfoPanel';
 import { gameSettings } from '../../util/gameSettings';
-import SelectButton from './SelectButton'
+import { Button } from '@material-ui/core';
 
 class Score4 extends Component {
   constructor(props) {
-    super(props);
-      
+    super(props);  
       this.state = {
         board: [],
         win: null,
         draw: false,
         ended:false,
-        numSpectate: 0,
-        room:null,
-        start:null,
-        symbol:null,
-        hasjoin:null,
-        score:null
+        score:null,
       };
-  }
-  
-  componentDidUpdate(){
-    
+      this.initialState={...this.state};
+      this.name =this.props.user;
+      this.handleClick = this.handleClick.bind(this);
+      this.handleClickNew = this.handleClickNew.bind(this);
 
-    if (this.state.start){
-   
-    }
-   
   }
 
 
   componentDidMount(){
-    // const spectate = this.props.match.params.id;
-    // console.log(spectate)
-    
-    const client = new Colyseus.Client('ws://localhost:4000');
-   
-  client.joinOrCreate( 'score4').then(room => {
-    console.log("Client",room.sessionId, "joined", room.name);
-    console.log("Room id:",room.id)
-    
-    room.onStateChange((state)=>{
-      this.setState(state);  
-      console.log("Room State",state);
-      console.log("compnent State",this.state);
-    })
-    room.onMessage("start",(data) => {
-      this.setState(data);
-      });
-      room.onMessage("join",(data) => {
-        this.setState(data);
-      })
+    const client = new Colyseus.Client("ws://adise-score4.herokuapp.com");
+    client.joinOrCreate( 'score4',{ 
+        accessToken:localStorage.FBidToken,
+        name: this.name
+    }).then(room => {
+          
+          room.onStateChange((data)=>{
+            this.setState(data);  
+     
+          });
+            room.onMessage("start",(data) => {
+              this.setState(data);
+            });
+            room.onMessage("join",(data) => {
+              this.setState(data);
+            })
 
-      room.onMessage("win",(data) => {
-        this.setState(data);
-        });
-    
-      room.onMessage("draw",(data) => {
-        this.setState(data);
-      });
-      
-      room.onMessage("ended",(data) => {
-        this.setState(data);
-        console.log("ended",data);
-      })
+            room.onMessage("win",(data) => {
+              this.setState(data);
+              });
+          
+            room.onMessage("draw",(data) => {
+              this.setState(data);
+            });
             
-    this.setState({room:room}) 
-        }).catch(e => {
-          console.log("JOIN ERROR", e);
+            room.onMessage("ended",(data) => {
+              this.setState(data);
+            });
+             
+        this.setState({room:room}) 
+              }).catch(e => {
+                console.log("JOIN ERROR", e);
     });
-  
-       
-
   }
-
+  
+   handleClick(){ 
+     this.state.room.leave();
+   }
+   handleClickNew(){
+    this.state.room.leave();
+    this.setState(this.initialState);
+    this.componentDidMount()
+  }
   render() {
-    console.log("rend",this.state)
-
     if (!this.state.room) {
       return null;
     }
-    const {
-      symbol, numSpectate, draw, win, ended, start, turn,score
-    } = this.state;
     
+    const {
+      symbol,  draw, win, ended, start, turn,score
+    } = this.state;
     const { colors } = gameSettings;
     const { color } = colors[symbol || 0];
     const active = !draw && !win;
     const isTurn = symbol === turn;
     const data = {
-      spectator: !symbol,
-      spectators: numSpectate,
       room: this.state.room.id,
       active,
       colors,
@@ -110,8 +99,7 @@ class Score4 extends Component {
       start,
       score
     };
-    console.log("data ",data)
-    console.log(this.state.room)
+
     return (
       <div className="score4">
       
@@ -125,7 +113,16 @@ class Score4 extends Component {
           />
         </ReactCursorPosition>
         <Score4Board colors={colors} board={this.state.board} />
-        <SelectButton data={data} />
+        <div className="select-buttons" >
+         <Button className="btn-pos" onClick={this.handleClick} variant="contained" color="primary" component={Link} to={"/"}>
+            Leave game
+          </Button>
+          { data.win && 
+            <Button className="btn-pos2" variant="contained" color="primary" onClick={this.handleClickNew} >
+                New game
+            </Button>
+           }
+        </div>
         </Grid>
       </div>
     );
