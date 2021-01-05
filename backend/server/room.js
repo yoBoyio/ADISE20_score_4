@@ -1,5 +1,6 @@
 const Room = require('colyseus').Room
 const Connect4Board = require('./connectFour')
+const { db } = require('../util/admin')
 
 class Connect4Room extends Room {
   onCreate () {
@@ -11,7 +12,7 @@ class Connect4Room extends Room {
       turn: null
     })
   }
-
+  
   onJoin (client) {
     const id = client.sessionId
     // Number of Palyers {}
@@ -24,8 +25,13 @@ class Connect4Room extends Room {
         // register secon player and start game
         this.setupGame(id)
       }
-      this.send(client, { symbol: this.players[id] })
+      client.send('join', { symbol: this.players[id] })
     }
+    // Register a callback to process a type of message sent by the client-side.
+    this.onMessage ('play', (client, message) => {
+      const id = client.sessionId
+      this.handlePlay(id, message)
+    })
   }
 
   setupGame (id) {
@@ -54,7 +60,7 @@ class Connect4Room extends Room {
         const draw = this.game.checkDraw()
         if (win) {
           // show winner
-          this.broadcast({ win: symbol })
+          this.broadcast('win', { win: symbol })
           this.win = symbol
         } else if (draw) {
           // show that it is draw
@@ -65,15 +71,6 @@ class Connect4Room extends Room {
     }
   }
 
-  // Register a callback to process a type of message sent by the client-side.
-  onMessage (client, message) {
-    const id = client.sessionId
-    if (message.command === 'play') {
-      this.handlePlay(id, message)
-    }
-  }
-
-  // Is called when a client leaves the room.
   onLeave (client) {
     const id = client.sessionId
     // If a player leaves the game, the other player is noticed and the game ends.
@@ -83,9 +80,7 @@ class Connect4Room extends Room {
   }
 
   // called before the room is destroyed
-  // 1. there are no more clients left in the room
-  // 2. manually call .disconnect() (we do that onLeave())
-  onDispose() {
+  async onDispose() {
     // before destroyed, saves data to db
     if (this.game) {
       const flat = []
@@ -94,7 +89,7 @@ class Connect4Room extends Room {
       const data = {
         board: flat,
         player_1: players[0] || '',
-        player_2: playersp[1] || '',
+        player_2: players[1] || '',
         room_id: this.roomId,
         draw: this.draw || false,
         winner: this.win || null,
@@ -102,14 +97,11 @@ class Connect4Room extends Room {
         width: 7,
       }
       
-      const score4db = await 
-        db.collection(`score4`)
+      await db.collection(`score4`)
           .add(data)
             .catch(err => {
               console.error(err)
             })
-      
-      return score4db
     }
   }
 }

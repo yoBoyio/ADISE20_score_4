@@ -4,7 +4,7 @@ function Connect4Board(rows, cols) {
   const size = {
       rows,
       cols
-  }
+  };
 
   (function init() {
     for (let i = 0; i < rows; i++) {
@@ -33,6 +33,9 @@ function Connect4Board(rows, cols) {
 
     return null
   }
+  function checkDraw() {
+    return count === size.rows * size.cols;
+  }
 
   function checkWin(row, col, player) {
     const paths = []
@@ -45,10 +48,10 @@ function Connect4Board(rows, cols) {
     backDiag();
 
     // Checks if condition exists in paths
-    // if not, indexOf returns -1
     const win = paths.some(path => {
-      return path.join('').map(pos => +pos)
-        .indexOf(condition !== -1)
+      console.log('paths', path)
+      console.log('joined!! ', path.join(''))
+      return path.join('').includes(condition)
     })
 
     return win
@@ -62,18 +65,26 @@ function Connect4Board(rows, cols) {
       for (let i = 0; i < size.rows; i++) {
         column.push(board[i][col])
       }
+      console.log('vertical', board)
     }
 
     function forwardDiag () {
-      const diag = []
-      let i = row -1
-      let j = col -1 
-      while (i >= 0 && j < size.cols) {
-        diag.push(board[i][j])
-        i += 1,
-        j += 1
+      const diag = [];
+      let i = row - 1;
+      let j = col - 1;
+      while (i >= 0 && j >= 0) {
+        diag.unshift(board[i][j]);
+        i -= 1;
+        j += 1;
       }
-      paths.push(diag)
+      i = row;
+      j = col;
+      while (i < size.rows && j < size.cols) {
+        diag.push(board[i][j]);
+        i += 1;
+        j += 1;
+      }
+      paths.push(diag);
     }
 
     function backDiag() {

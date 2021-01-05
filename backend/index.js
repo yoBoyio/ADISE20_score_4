@@ -37,7 +37,7 @@ app.get('/user', FBAuth, getAuthenticatedUser);
 app.post('/signup', signup)
 app.post('/login', login)
 
-gameServer.define('connect4', room)
+gameServer.define('score4', room)
           .on("create", (room) => console.log("room created:", room.roomId))
           .on("dispose", (room) => console.log("room disposed:", room.roomId))
           .on("join", (room, client) => console.log(client.id, "joined", room.roomId))
