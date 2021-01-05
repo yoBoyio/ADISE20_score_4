@@ -19,6 +19,7 @@ app.use(express.json())
 // history routes
 app.get('/history/:handle', getHistory);
 
+
 // users routes
 app.get('/user', FBAuth, getAuthenticatedUser);
 app.post('/signup', signup)
