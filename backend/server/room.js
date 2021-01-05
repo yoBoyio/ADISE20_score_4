@@ -104,6 +104,16 @@ class Connect4Room extends Room {
             })
     }
   }
+  async onAuth (client, options, request) {
+    console.log(options.name)
+    if (options.accessToken) {
+        this.name=options.name;
+        return true;
+
+    } else {
+        throw new ServerError(400, "bad access token");
+    }
+  }
 }
 
 module.exports = Connect4Room
