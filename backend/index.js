@@ -7,7 +7,7 @@ const port = process.env.PORT || 4000
 
 const FBAuth = require('./util/fbAuth')
 const { signup, login, getAuthenticatedUser } = require('./handlers/users')
-const { getAllTests } = require('./handlers/test')
+const {getHistory} = require('./server/handlers/History')
 const room = require('./server/room')
 
 const server = http.createServer(app)
@@ -15,22 +15,9 @@ const gameServer = new colyseus.Server({ server })
 
 app.use(cors())
 app.use(express.json())
-// middleware functions dont know how to write'em correctly
 
-// app.options(function (req, res, next) {
-//   res.header('Access-Control-Allow-Origin', '/login')
-//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-//   next()
-// })
-
-// app.options(function (req, res, next) {
-//   res.header('Access-Control-Allow-Origin', '/signup')
-//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-//   next()
-// })
-
-// test routes
-app.get('/test', getAllTests)
+// history routes
+app.get('/history/:handle', getHistory);
 
 // users routes
 app.get('/user', FBAuth, getAuthenticatedUser);
@@ -43,6 +30,3 @@ gameServer.define('score4', room)
           .on("join", (room, client) => console.log(client.id, "joined", room.roomId))
 app.set('port', port)
 gameServer.listen(port)
-// app.listen(port, () =>
-// console.log(`Server listening http://localhost:${port}`) );
-// gameServer.listen(port);

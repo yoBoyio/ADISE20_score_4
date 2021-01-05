@@ -9,7 +9,6 @@ const config = {
   appId: '1:233357461686:web:8a40c2680df8206991be17',
   measurementId: 'G-2K6WRDM3TW'
 }
-// admin.initializeApp();
 admin.initializeApp({
   credential: admin.credential.cert(require('../keyAdmin.json'))
 })
