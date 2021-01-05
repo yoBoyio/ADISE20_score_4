@@ -33,7 +33,7 @@ class Score4 extends Component {
 
 
   componentDidMount(){
-    const client = new Colyseus.Client('ws://localhost:4000');
+    const client = new Colyseus.Client("ws://adise-score4.herokuapp.com");
     client.joinOrCreate( 'score4',{ 
         accessToken:localStorage.FBidToken,
         name: this.name

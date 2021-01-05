@@ -41,7 +41,6 @@ const mapStateToProps = (state) => ({
     user: state.user
 });
 CreateRoom.propTypes = {
-    logoutUser: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
 }
 export default connect(mapStateToProps)(CreateRoom);

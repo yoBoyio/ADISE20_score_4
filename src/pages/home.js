@@ -40,7 +40,6 @@ const styles = {
       }
    
     render() {
-        console.log(this.state)
 
         const { history, loading } = this.props.data;
         const { authenticated  } = this.props.user;
