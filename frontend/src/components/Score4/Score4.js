@@ -3,17 +3,15 @@ import ReactCursorPosition from 'react-cursor-position';
 import * as Colyseus from 'colyseus.js';
 import Grid from '@material-ui/core/Grid';
 import './styles/score4.css';
-
 import { Link } from 'react-router-dom';
-
+import { Button } from '@material-ui/core';
 
 //components
 import Score4Board from './Board';
 import Score4Dropper from './Dropper';
 import InfoPanel from './InfoPanel';
 import { gameSettings } from '../../util/gameSettings';
-import { Button } from '@material-ui/core';
-
+import Chat from './Chat';
 class Score4 extends Component {
   constructor(props) {
     super(props);  
@@ -66,6 +64,8 @@ class Score4 extends Component {
               }).catch(e => {
                 console.log("JOIN ERROR", e);
     });
+
+    
   }
   
    handleClick(){ 
@@ -123,6 +123,7 @@ class Score4 extends Component {
             </Button>
            }
         </div>
+        
         </Grid>
       </div>
     );
