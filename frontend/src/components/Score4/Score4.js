@@ -3,15 +3,17 @@ import ReactCursorPosition from 'react-cursor-position';
 import * as Colyseus from 'colyseus.js';
 import Grid from '@material-ui/core/Grid';
 import './styles/score4.css';
+
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+
 
 //components
 import Score4Board from './Board';
 import Score4Dropper from './Dropper';
 import InfoPanel from './InfoPanel';
 import { gameSettings } from '../../util/gameSettings';
-import Chat from './Chat';
+import { Button } from '@material-ui/core';
+
 class Score4 extends Component {
   constructor(props) {
     super(props);  
@@ -20,7 +22,7 @@ class Score4 extends Component {
         win: null,
         draw: false,
         ended:false,
-        score:null,
+        message:null
       };
       this.initialState={...this.state};
       this.name =this.props.user;
@@ -31,7 +33,7 @@ class Score4 extends Component {
 
 
   componentDidMount(){
-    const client = new Colyseus.Client("ws://adise-score4.herokuapp.com");
+    const client = new Colyseus.Client("ws://localhost:4000/");
     client.joinOrCreate( 'score4',{ 
         accessToken:localStorage.FBidToken,
         name: this.name
@@ -80,10 +82,10 @@ class Score4 extends Component {
     if (!this.state.room) {
       return null;
     }
-    
     const {
-      symbol,  draw, win, ended, start, turn,score
+      symbol,  draw, win, ended, start, turn,message
     } = this.state;
+    console.log(symbol)
     const { colors } = gameSettings;
     const { color } = colors[symbol || 0];
     const active = !draw && !win;
@@ -96,8 +98,7 @@ class Score4 extends Component {
       draw,
       win,
       ended,
-      start,
-      score
+      start
     };
 
     return (
@@ -123,7 +124,7 @@ class Score4 extends Component {
             </Button>
            }
         </div>
-        
+        <p> {message} </p>
         </Grid>
       </div>
     );
