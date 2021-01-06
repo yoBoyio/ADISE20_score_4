@@ -14,7 +14,6 @@ import Profile from '../components/Profile';
 import BoardSkeleton from '../util/BoardSkeleton';
 import {getHistory} from '../redux/actions/dataActions';
 import History from '../components/History';
-//home page get data from api using axios
 const styles = {
     card: {
       position: 'relative',
@@ -33,14 +32,11 @@ const styles = {
   
  class home extends Component {
       
-   
     componentDidMount() {
 
             this.setState(this.props.getHistory(this.props.user.credentials.handle));
       }
-   
     render() {
-
         const { history, loading } = this.props.data;
         const { authenticated  } = this.props.user;
         const {classes} = this.props;
