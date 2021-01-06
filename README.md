@@ -30,11 +30,13 @@ Tolios Dimitris: Frontend Developer
 ## Routes
 | Method | URI | Description|
 | --- | --- | --- |
+| GET | `/` | Home Page. If the user is logged in, shows this player's history|
 | GET | `/login`| Shows login page|
 | POST | `/login`| Returns user's authentication Token|
 | GET | `/signup`| Shows signup page|
 | POST | `/signup`| Registers the user to the db and then returns user's authentication Token|
-| GET | `/` | Home Page. If the user is logged in, initializes a new game|
+| GET | `/score4`| Initializes a new room, or joins one|
+
 
 
 ## API
