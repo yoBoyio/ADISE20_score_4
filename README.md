@@ -27,6 +27,16 @@ Samsouri Nasia: Backend Developer
 
 Tolios Dimitris: Frontend Developer 
 
+## Routes
+| Method | URI | Description|
+| --- | --- | --- |
+| GET | `/login`| Shows login page|
+| POST | `/login`| Returns user's authentication Token|
+| GET | `/signup`| Shows signup page|
+| POST | `/signup`| Registers the user to the db and then returns user's authentication Token|
+| GET | `/` | Home Page. If the user is logged in, initializes a new game|
+
+
 ## API
 
 ### User Model
@@ -66,12 +76,3 @@ Stores the data of each game after it is ended.
 |`handlePlay`| Handles the players' turn, ckecks win or draw|
 |`onLeave`| Triggered when a player leaves the room|
 |`onDispose`| Triggered when the game is ended|
-
-## Routes
-| Method | URI | Description|
-| --- | --- | --- |
-| GET | `/login`| Shows login page|
-| POST | `/login`| Returns user's authentication Token|
-| GET | `/signup`| Shows signup page|
-| POST | `/signup`| Registers the user to the db and then returns user's authentication Token|
-| GET | `/` | Home Page. If the user is logged in, initializes a new game|
