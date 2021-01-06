@@ -7,17 +7,21 @@ You can try it at http://score4-front-adise.herokuapp.com/
 Connect4 online game
 
 #### Local installation
+*You will need to install [node.js](https://nodejs.org/en/download/) before running it locally.*
+
 git clone https://github.com/iee-ihu-gr-course1941/ADISE20_score_4.git
 
-from the backend directory:
+Run backend server:
 ```
+$ cd backend
 $ npm install
 $ npm start
 ```
 If there are any issues, you may need to upgrade your node version.
 
-from the frontend directory:
+Run react server:
 ```
+$ cd frontend
 $ npm install
 $ npm start
 ```
