@@ -30,11 +30,7 @@ $ npm start
 ```
 4. Visit `localhost:3000` in your browser.
 
-## Contributors
 
-Samsouri Nasia: Backend Developer
-
-Tolios Dimitris: Frontend Developer 
 
 ## Routes
 | Method | URI | Description|
@@ -45,13 +41,15 @@ Tolios Dimitris: Frontend Developer
 | GET | `/signup`| Shows signup page|
 | POST | `/signup`| Registers the user to the db and then returns user's authentication Token|
 | GET | `/score4`| Initializes a new room, or joins one|
+| GET | '/history/:handle'| Requested when a user is logged in, on home page. Returns user's history|
+
 
 
 
 ## API
 
 ### User Model
-Stores the data of every registered User.
+Stores the data to firebase of every registered User.
 | Field | Description |
 | --- | --- |
 |`email`|User's email|
@@ -59,17 +57,22 @@ Stores the data of every registered User.
 |`userId`| Unique ID for every player|
 |`createdAt`| Timestamp from when the user registered|
 
+
+
 ### Game Model
-Stores the data of each game after it is ended.
+Stores the data to firebase of each game after it is ended.
 | Field | Description |
 | --- | --- |
 |`board`| One Dimensional Array of the board's final state|
 |`player_1`| First Player's ID|
 |`player_2`| Second Player's ID|
+|`room_id`| Room ID|
 |`draw`| Boolean Indicating if the game ended in draw|
 |`winner`| Winner's ID (or null)|
 |`height`| Board's number of Rows (default: 6)|
 |`width`| Board's number of Columns (default: 7)|
+|`name`| Username of authenticated user|
+
 
 ### Room
 | Field | Description |
@@ -77,6 +80,10 @@ Stores the data of each game after it is ended.
 |`maxClients` | How many Clients can join a room |
 |`players {}` | Stores the 2 connected players |
 |`turn`   |     Player's turn to play (1 or 2)|
+|`board []`  |  One Dimensional Array representation of board|
+|`name`| Username of authenticated user|
+
+
 
 **Methods**
 | Method | Description |
@@ -87,3 +94,11 @@ Stores the data of each game after it is ended.
 |`handlePlay`| Handles the players' turn, ckecks win or draw|
 |`onLeave`| Triggered when a player leaves the room|
 |`onDispose`| Triggered when the game is ended|
+|`onAuth`| Triggered  before onJoin and validate the token|
+
+## Contributors
+
+Samsouri Nasia: Backend Developer
+
+Tolios Dimitris: Frontend Developer 
+
