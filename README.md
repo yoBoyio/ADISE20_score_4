@@ -21,8 +21,34 @@ from the frontend directory:
 $ npm install
 $ npm start
 ```
+## Contributors
+
+Samsouri Nasia: Backend Developer
+
+Tolios Dimitris: Frontend Developer 
 
 ## API
+
+### User Model
+Stores the data of every registered User.
+| Field | Description |
+| --- | --- |
+|`email`|User's email|
+|`handle`| username|
+|`userId`| Unique ID for every player|
+|`createdAt`| Timestamp from when the user registered|
+
+### Game Model
+Stores the data of each game after it is ended.
+| Field | Description |
+| --- | --- |
+|`board`| One Dimensional Array of the board's final state|
+|`player_1`| First Player's ID|
+|`player_2`| Second Player's ID|
+|`draw`| Boolean Indicating if the game ended in draw|
+|`winner`| Winner's ID (or null)|
+|`height`| Board's number of Rows (default: 6)|
+|`width`| Board's number of Columns (default: 7)|
 
 ### Room
 | Field | Description |
@@ -35,14 +61,17 @@ $ npm start
 | Method | Description |
 | --- | --- |
 |`onCreate` | Creates a room with null board|
-|`onJoin`| Triggered with ever connection that joins the room|
-|`setupGame`| Initialise the board and starts the game|
+|`onJoin`| Triggered with every connection that joins the room|
+|`setupGame`| Initializes the board and starts the game|
 |`handlePlay`| Handles the players' turn, ckecks win or draw|
-|`onLeave`| Triggers when a player leaves the room|
-|`onDispose`| Triggers when the game is ended|
+|`onLeave`| Triggered when a player leaves the room|
+|`onDispose`| Triggered when the game is ended|
 
-
-## Contributors
-
-Samsouri Nasia: Backend Developer
-Tolios Dimitris: Frontend Developer 
+## Routes
+| Method | URI | Description|
+| --- | --- | --- |
+| GET | `/login`| Shows login page|
+| POST | `/login`| Returns user's authentication Token|
+| GET | `/signup`| Shows signup page|
+| POST | `/signup`| Registers the user to the db and then returns user's authentication Token|
+| GET | `/` | Home Page. If the user is logged in, initializes a new game|
