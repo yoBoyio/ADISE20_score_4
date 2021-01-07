@@ -3,14 +3,19 @@ import ReactCursorPosition from 'react-cursor-position';
 import * as Colyseus from 'colyseus.js';
 import Grid from '@material-ui/core/Grid';
 import './styles/score4.css';
+
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+
 
 //components
 import Score4Board from './Board';
 import Score4Dropper from './Dropper';
 import InfoPanel from './InfoPanel';
 import { gameSettings } from '../../util/gameSettings';
+
+import { Button } from '@material-ui/core';
+
+
 class Score4 extends Component {
   constructor(props) {
     super(props);  
@@ -79,10 +84,14 @@ class Score4 extends Component {
     if (!this.state.room) {
       return null;
     }
-    
     const {
+
       symbol,  draw, win, ended, start, turn
+
+      symbol,  draw, win, ended, start, turn
+
     } = this.state;
+    console.log(symbol)
     const { colors } = gameSettings;
     const { color } = colors[symbol || 0];
     const active = !draw && !win;

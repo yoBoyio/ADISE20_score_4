@@ -96,6 +96,16 @@ Stores the data to firebase of each game after it is ended.
 |`onDispose`| Triggered when the game is ended|
 |`onAuth`| Triggered  before onJoin and validate the token|
 
+### Chat
+Every game room contains a real-time chat where the 2 players can communicate.
+The chat is itself a Colyseus Room.
+| Method | Description |
+| --- | --- |
+|`onCreate` | Creates the chat|
+|`onJoin`| Triggered when a player joins the room|
+|`onLeave`| Triggered when a player leaves the room|
+|`onDispose`| Destroyes the Chat room when all players leave the game room|
+
 ## Contributors
 
 Samsouri Nasia: Backend Developer
