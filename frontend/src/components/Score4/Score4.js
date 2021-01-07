@@ -12,7 +12,9 @@ import Score4Board from './Board';
 import Score4Dropper from './Dropper';
 import InfoPanel from './InfoPanel';
 import { gameSettings } from '../../util/gameSettings';
+
 import { Button } from '@material-ui/core';
+
 
 class Score4 extends Component {
   constructor(props) {
@@ -22,7 +24,7 @@ class Score4 extends Component {
         win: null,
         draw: false,
         ended:false,
-        message:null
+
       };
       this.initialState={...this.state};
       this.name =this.props.user;
@@ -83,7 +85,11 @@ class Score4 extends Component {
       return null;
     }
     const {
-      symbol,  draw, win, ended, start, turn,message
+
+      symbol,  draw, win, ended, start, turn
+
+      symbol,  draw, win, ended, start, turn
+
     } = this.state;
     console.log(symbol)
     const { colors } = gameSettings;
@@ -124,7 +130,7 @@ class Score4 extends Component {
             </Button>
            }
         </div>
-        <p> {message} </p>
+        
         </Grid>
       </div>
     );
