@@ -11,7 +11,6 @@ import Score4Board from './Board';
 import Score4Dropper from './Dropper';
 import InfoPanel from './InfoPanel';
 import { gameSettings } from '../../util/gameSettings';
-import Chat from './Chat';
 class Score4 extends Component {
   constructor(props) {
     super(props);  
@@ -20,7 +19,7 @@ class Score4 extends Component {
         win: null,
         draw: false,
         ended:false,
-        score:null,
+
       };
       this.initialState={...this.state};
       this.name =this.props.user;
@@ -31,7 +30,7 @@ class Score4 extends Component {
 
 
   componentDidMount(){
-    const client = new Colyseus.Client("ws://adise-score4.herokuapp.com");
+    const client = new Colyseus.Client("ws://localhost:4000/");
     client.joinOrCreate( 'score4',{ 
         accessToken:localStorage.FBidToken,
         name: this.name
@@ -82,7 +81,7 @@ class Score4 extends Component {
     }
     
     const {
-      symbol,  draw, win, ended, start, turn,score
+      symbol,  draw, win, ended, start, turn
     } = this.state;
     const { colors } = gameSettings;
     const { color } = colors[symbol || 0];
@@ -96,8 +95,7 @@ class Score4 extends Component {
       draw,
       win,
       ended,
-      start,
-      score
+      start
     };
 
     return (

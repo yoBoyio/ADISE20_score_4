@@ -31,10 +31,7 @@ const InfoPanel = (props) => {
             {data.draw
               && <p> Draw! </p>
             }
-              <h2> Score</h2> 
-            {
-               data.win ? (data.score+=1):(data.score) 
-            }
+             
           </div>
         )}
       </CardContent>
